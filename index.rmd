@@ -1,24 +1,21 @@
 ---
 knit: "bookdown::render_book"
-title: "R for Data Science"
+title: "R para Ciencia de los Datos"
 author: ["Garrett Grolemund", "Hadley Wickham"]
-description: "This book will teach you how to do data science with R: You'll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you'll learn how to clean data and draw plots---and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You'll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You'll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data."
-url: 'http\://r4ds.had.co.nz/'
-github-repo: hadley/r4ds
-twitter-handle: hadley
+description: "Este libro le enseñará cómo aplicar ciencia de los datos con R: Usted aprenderá cómo llevar sus datos a R, manipularlos en la estructura más útil, transformarlos, visualizarlos y modelarlos. En este libro, usted encontrará un vademecum de habilidades para la ciencia de datos. Al igual que un químico aprende cómo limpiar los tubos de ensayo y un laboratorio de almacenamiento, usted aprenderá cómo limpiar datos y dibujar gráficos---además de muchas otras cosas. Estas son las habilidades que permiten que la ciencia de los datos suceda, y aquí encontrará las mejores prácticas para hacer cada una de estas cosas con R. Aprenderá cómo usar la gramática de gráficos, programación literaria e investigación reproducible para ahorrar tiempo. También aprenderá a administrar los recursos cognitivos para facilitar los descubrimientos cuando se discuten, visualizan y exploran los datos."
 cover-image: cover.png
 site: bookdown::bookdown_site
 documentclass: book
 ---
 
-# Welcome {-}
+# Bienvenida {-}
 
-This is the website for __"R for Data Science"__. This book will teach you how to do data science with R: You'll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you'll learn how to clean data and draw plots---and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You'll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You'll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data. 
+Este es el sitio web de __"R para Ciencia de los Datos"__. Este libro le enseñará cómo aplicar ciencia de los datos con R: Usted aprenderá cómo llevar sus datos a R, manipularlos en la estructura más útil, transformarlos, visualizarlos y modelarlos. En este libro, usted encontrará un vademecum de habilidades para la ciencia de datos. Al igual que un químico aprende cómo limpiar los tubos de ensayo y un laboratorio de almacenamiento, usted aprenderá cómo limpiar datos y dibujar gráficos---además de muchas otras cosas. Estas son las habilidades que permiten que la ciencia de los datos suceda, y aquí encontrará las mejores prácticas para hacer cada una de estas cosas con R. Aprenderá cómo usar la gramática de gráficos, programación literaria e investigación reproducible para ahorrar tiempo. También aprenderá a administrar los recursos cognitivos para facilitar los descubrimientos cuando se discuten, visualizan y exploran los datos.
 
-To be published by O'Reilly in late 2016. Pre-order from [amazon](http://amzn.to/2aHLAQ1).
+Publicado por O'Reilly a finales de 2016. Pre-orden de [amazon](http://amzn.to/2aHLAQ1).
 
 <img src="cover.png" width="250" height="375" alt="Cover image" />
 
-(R for Data Science was formerly called Data Science with R in Hands-On Programming with R)
+(R for Data Science se llamaba anteriormente Data Science with R en Hands-On Programming with R)
 
-This work is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/us/) United States License. 
+Esta obra está licenciada bajo la [Creative Commons Attribution-NonCommercial-NoDerivs 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/us/) United States License. 
