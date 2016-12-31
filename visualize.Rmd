@@ -9,7 +9,7 @@ Este capítulo le enseñará cómo visualizar sus datos usando ggplot2. R tiene 
 
 Si quiere aprender más sobre los fundamentos teóricos de ggplot2 antes de empezar, le recomiendo leer "The Layered Grammar of Graphics", <http://vita.had.co.nz/papers/layered-grammar.pdf>.
 
-### Prerequisitos
+### Pre-requisitos
 
 Este capítulo se centra en ggplot2, uno de los miembros centrales del tidyverse. Para acceder a los conjuntos de datos, páginas de ayuda y funciones que utilizaremos en este capítulo, cargue el tidyverse ejecutando este código:
 

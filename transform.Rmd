@@ -1,50 +1,49 @@
-# Data transformation {#transform}
+# Transformación de datos {#transform}
 
-## Introduction
+## Introducción
 
-Visualisation is an important tool for insight generation, but it is rare that you get the data in exactly the right form you need. Often you'll need to create some new variables or summaries, or maybe you just want to rename the variables or reorder the observations in order to make the data a little easier to work with. You'll learn how to do all that (and more!) in this chapter, which will teach you how to transform your data using the dplyr package and a new dataset on flights departing New York City in 2013.
+La visualización es una herramienta importante para la generación de información, pero es raro obtener los datos en la forma correcta que necesita. A menudo tendrá que crear algunas nuevas variables o resúmenes, o tal vez sólo desee cambiar el nombre de las variables o reordenar las observaciones con el fin de hacer los datos un poco más fácil de trabajar. Aprenderá a hacer todo eso (¡y más!) en este capítulo, que le enseñará cómo transformar sus datos usando el paquete dplyr y un nuevo conjunto de datos sobre vuelos que salen de Nueva York en 2013.
 
-### Prerequisites
+### Pre-requisitos
 
-In this chapter we're going to focus on how to use the dplyr package, another core member of the tidyverse. We'll illustrate the key ideas using data from the nycflights13 package, and use ggplot2 to help us understand the data. 
+En este capítulo vamos a enfocarnos en cómo usar el paquete dplyr, otro miembro básico del tidyverse. Ilustramos las ideas clave utilizando los datos del paquete nycflights13 y usamos ggplot2 para ayudarnos a entender los datos.
 
 ```{r setup, message = FALSE}
 library(nycflights13)
 library(tidyverse)
 ```
 
-Take careful note of the conflicts message that's printed when you load the tidyverse. It tells you that dplyr overwrites some functions in base R. If you want to use the base version of these functions after loading dplyr, you'll need to use their full names: `stats::filter()` and `stats::lag()`.
+Tenga cuidado con el mensaje de conflictos que se imprime cuando se carga el tidyverse. Le dice que dplyr sobrescribe algunas funciones en la base de R. Si desea usar la versión básica de estas funciones después de cargar dplyr, necesitará usar sus nombres completos: `stats::filter()` y `stats::lag()`.
 
 ### nycflights13
 
-To explore the basic data manipulation verbs of dplyr, we'll use `nycflights13::flights`. This data frame contains all `r format(nrow(nycflights13::flights), big.mark = ",")` flights that departed from New York City in 2013. The data comes from the US [Bureau of Transportation Statistics](http://www.transtats.bts.gov/DatabaseInfo.asp?DB_ID=120&Link=0), and is documented in `?flights`.
+Para explorar los verbos básicos de manipulación de dplyr, usaremos `nycflights13::flights`. Este data frame contiene todos los vuelos `r format(nrow(nycflights13::flights), big.mark = ",")` que partieron desde New York City en 2013. Los datos provienen del [US Bureau of Transportation Statistics](http://www.transtats.bts.gov/DatabaseInfo.asp?DB_ID=120&Link=0), y está documentado en `?flights`.
 
 ```{r}
 flights
 ```
 
-You might notice that this data frame prints a little differently from other data frames you might have used in the past: it only shows the first few rows and all the columns that fit on one screen. (To see the whole dataset, you can run `View(flights)` which will open the dataset in the RStudio viewer). It prints differently because it's a __tibble__. Tibbles are data frames, but slightly tweaked to work better in the tidyverse. For now, you don't need to worry about the differences; we'll come back to tibbles in more detail in [wrangle](#wrangle-intro).
- 
-You might also have noticed the row of three (or four) letter abbreviations under the column names. These describe the type of each variable:
+Podría notar que este data frame se imprime un poco diferente de otros data frame que podría haber utilizado anteriormente: sólo muestra las primeras filas y todas las columnas que caben en una pantalla. (Para ver el conjunto de datos, puede ejecutar `View(flights)` que abrirá el conjunto de datos en el visor de RStudio). Se imprime de manera diferente porque es un __tibble__. Los tibbles son marcos de datos, pero ligeramente mejorados para trabajar mejor en el tidyverse. Por ahora, usted no necesita preocuparse por las diferencias; volveremos con los tibbles con más detalle en [wrangle](# wrangle-intro).
 
-* `int` stands for integers.
+También puede haber notado la fila de tres (o cuatro) abreviaturas de letra debajo de los nombres de columna. Estos describen el tipo de cada variable:
 
-* `dbl` stands for doubles, or real numbers.
+* `int` representa números enteros.
 
-* `chr` stands for character vectors, or strings.
+* `dbl` representa números reales.
 
-* `dttm` stands for date-times (a date + a time).
+* `chr` representa vectores o cadenas de caracteres.
 
-There are three other common types of variables that aren't used in this dataset but you'll encounter later in the book:
+* `dttm` representa fechas u horas (una fecha + una hora).
 
-* `lgl` stands for logical, vectors that contain only `TRUE` or `FALSE`.
+Existen otros tres tipos comunes de variables que no se utilizan en este conjunto de datos pero que encontrará más adelante en el libro:
 
-* `fctr` stands for factors, which R uses to represent categorical variables
-  with fixed possible values.
+* `lgl` representa valores lógicos, vectores que contienen únicamente `TRUE`   o `FALSE`.
 
-* `date` stands for dates.
+* `fctr` representa factores, que R usa para representar variables            categóricas con posibles valores fijos.
 
-### dplyr basics
+* `date` representa fechas.
+
+### Bases de dplyr 
 
 In this chapter you are going to learn the five key dplyr functions that allow you to solve the vast majority of your data manipulation challenges:
 
