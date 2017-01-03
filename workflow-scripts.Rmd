@@ -1,16 +1,16 @@
-# Workflow: scripts
+# Flujo de trabajo: scripts
 
-So far you've been using the console to run code. That's a great place to start, but you'll find it gets cramped pretty quickly as you create more complex ggplot2 graphics and dplyr pipes. To give yourself more room to work, it's a great idea to use the script editor. Open it up either by clicking the File menu, and selecting New File, then R script, or using the keyboard shortcut Cmd/Ctrl + Shift + N. Now you'll see four panes:
+Hasta ahora ha estado usando la consola para ejecutar código. Ese es un gran lugar para comenzar, pero encontrará que se agrieta bastante rápido como para crear gráficos más complejos en ggplot2 y tuberías en dplyr. Para darse más espacio para trabajar, es una gran idea usar el editor de scripts. Abra la ventana haciendo clic en el menú Archivo y seleccionando Nuevo archivo, luego R script o usando el atajo de teclado Cmd / Ctrl + Mayús + N. Ahora verá cuatro paneles:
 
 ```{r echo = FALSE, out.width = "75%"}
 knitr::include_graphics("diagrams/rstudio-editor.png")
 ```
 
-The script editor is a great place to put code you care about. Keep experimenting in the console, but once you have written code that works and does what you want, put it in the script editor. RStudio will automatically save the contents of the editor when you quit RStudio, and will automatically load it when you re-open. Nevertheless, it's a good idea to save your scripts regularly and to back them up.
+El editor de script es un gran lugar para poner el código que le interesa. Siga experimentando en la consola, pero una vez que haya escrito un código que funcione y haga lo que quiera, póngalo en el editor de scripts. RStudio guardará automáticamente el contenido del editor cuando salga de RStudio, y lo cargará automáticamente cuando vuelva a abrirlo. Sin embargo, es una buena idea guardar sus scripts con regularidad y respaldarlas.
 
-## Running code
+## Ejecutando código
 
-The script editor is also a great place to build up complex ggplot2 plots or long sequences of dplyr manipulations. The key to using the script editor effectively is to memorise one of the most important keyboard shortcuts: Cmd/Ctrl + Enter. This executes the current R expression in the console. For example, take the code below. If your cursor is at █, pressing Cmd/Ctrl + Enter will run the complete command that generates `not_cancelled`. It will also move the cursor to the next statement (beginning with `not_cancelled %>%`). That makes it easy to run your complete script by repeatedly pressing Cmd/Ctrl + Enter.
+El editor de scripts es también un gran lugar para construir gráficos complejos en ggplot2 o largas secuencias de manipulaciones en dplyr. La clave para usar el editor de scripts es memorizar uno de los atajos de teclado más importantes: Cmd / Ctrl + Enter. Esto ejecuta la expresión R actual en la consola. Por ejemplo, tome el código de abajo. Si el cursor está en █, al pulsar Cmd / Ctrl + Enter se ejecutará el comando completo que genera `not_cancelled`. También moverá el cursor a la siguiente instrucción (empezando por `not_cancelled%>%`). Eso hace que sea fácil de ejecutar el script completo presionando repetidamente Cmd / Ctrl + Enter.
 
 ```{r, eval = FALSE}
 library(dplyr)
@@ -24,38 +24,37 @@ not_cancelled %>%
   summarise(mean = mean(dep_delay))
 ```
 
-Instead of running expression-by-expression, you can also execute the complete script in one step: Cmd/Ctrl + Shift + S. Doing this regularly is a great way to check that you've captured all the important parts of your code in the script. 
+En lugar de ejecutar expresión por expresión, también puede ejecutar el guión completo en un solo paso: Cmd / Ctrl + Shift + S. Hacer esto regularmente es una excelente manera de comprobar que ha capturado todas las partes importantes de su código en el script.
 
-I recommend that you always start your script with the packages that you need. That way, if you share your code with others, they can easily see what packages they need to install. Note, however, that you should never include `install.packages()` or `setwd()` in a script that you share. It's very antisocial to change settings on someone else's computer!
+Le recomiendo que siempre inicie su script con los paquetes que necesita. De esta forma, si comparte su código con otras personas, puede ver fácilmente qué paquetes necesitan instalar. Tenga en cuenta, sin embargo, que nunca debe incluir `install.packages()` o `setwd()` en un script que comparta. ¡Es muy antisocial cambiar la configuración en la computadora de otra persona!
 
-When working through future chapters, I highly recommend starting in the editor and practicing your keyboard shortcuts. Over time, sending code to the console in this way will become so natural that you won't even think about it.
+Cuando se trabaja en capítulos futuros, recomiendo muchísimo comenzar en el editor y practicar los atajos de teclado. Con el tiempo, el envío de código a la consola de esta manera será tan natural que ni siquiera pensará en ello.
 
-## RStudio diagnostics
+## Diagnósticos de RStudio
 
-The script editor will also highlight syntax errors with a red squiggly line and a cross in the sidebar:
+El editor de scripts también resaltará los errores de sintaxis con una línea ondulada roja y una cruz en la barra lateral:
 
 ```{r echo = FALSE, out.width = NULL}
 knitr::include_graphics("screenshots/rstudio-diagnostic.png")
 ```
 
-Hover over the cross to see what the problem is:
+Pase el cursor sobre la cruz para ver cuál es el problema:
 
 ```{r echo = FALSE, out.width = NULL}
 knitr::include_graphics("screenshots/rstudio-diagnostic-tip.png")
 ```
 
-RStudio will also let you know about potential problems:
+RStudio también le informará sobre posibles problemas:
 
 ```{r echo = FALSE, out.width = NULL}
 knitr::include_graphics("screenshots/rstudio-diagnostic-warn.png")
 ```
 
-## Practice
+## Práctica
 
-1.  Go to the RStudio Tips twitter account, <https://twitter.com/rstudiotips>
-    and find one tip that looks interesting. Practice using it!
+1.  Vaya a la cuenta de tips de RStudio, <https://twitter.com/rstudiotips>
+    y encuentre un tip que luzca interesante. ¡Practique usándolo!
 
-1.  What other common mistakes will RStudio diagnostics report?  Read
-    <https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics> to 
-    find out.
+1.  ¿Qué otros errores comunes reportarán los diagnósticos de RStudio? Lea
+    <https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics> para descubirlos.
     
