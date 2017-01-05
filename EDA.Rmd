@@ -1,104 +1,96 @@
-# Exploratory Data Analysis
+# Análisis de datos exploratorio
 
-## Introduction
+## Introducción
 
-This chapter will show you how to use visualisation and transformation to explore your data in a systematic way, a task that statisticians call exploratory data analysis, or EDA for short. EDA is an iterative cycle. You:
+Este capítulo le mostrará cómo usar la visualización y la transformación para explorar sus datos de manera sistemática, una tarea que los estadísticos llaman análisis exploratorio de datos o ADE para abreviar. ADE es un ciclo iterativo. Usted:
 
-1. Generate questions about your data.
+1. Genera preguntas sobre sus datos.
 
-1. Search for answers by visualising, transforming, and modelling your data.
+1. Busca respuestas al visualizar, transformar y modelar sus datos.
 
-1. Use what you learn to refine your questions and/or generate new questions.
+1. Use lo que aprenda para refinar sus preguntas y/o generar nuevas.
 
-EDA is not a formal process with a strict set of rules. More than anything, EDA is a state of mind. During the initial phases of EDA you should feel free to investigate every idea that occurs to you. Some of these ideas will pan out, and some will be dead ends. As your exploration continues, you will hone in on a few particularly productive areas that you'll eventually write up and communicate to others.
+El ADE no es un proceso formal con un estricto conjunto de reglas. Más que nada, el ADE es un estado de ánimo. Durante las fases iniciales del ADE usted debe sentirse libre de investigar cada idea que se le ocurra. Algunas de estas ideas se desarrollarán, y algunos serán callejones sin salida. A medida que su exploración continúe, perfeccionará en algunas áreas particularmente productivas que eventualmente escribirá y comunicará a otros.
 
-EDA is an important part of any data analysis, even if the questions are handed to you on a platter, because you always need to investigate the quality of your data. Data cleaning is just one application of EDA: you ask questions about whether your data meets your expectations or not. To do data cleaning, you'll need to deploy all the tools of EDA: visualisation, transformation, and modelling.
+El ADE es una parte importante de cualquier análisis de datos, incluso si las preguntas se le entregan en un disco, porque siempre tiene que investigar la calidad de sus datos. La limpieza de datos es sólo una aplicación del ADE: usted hace preguntas sobre si sus datos cumplen sus expectativas o no. Para limpiar los datos, necesitará desplegar todas las herramientas de ADE: visualización, transformación y modelado.
 
-### Prerequisites
+### Pre-requisitos
 
-In this chapter we'll combine what you've learned about dplyr and ggplot2 to interactively ask questions, answer them with data, and then ask new questions.
+En este capítulo vamos a combinar lo que ha aprendido acerca de dplyr y ggplot2 para hacer interactivamente preguntas, responderlas con datos y luego hacer nuevas preguntas.
 
 ```{r setup, message = FALSE}
 library(tidyverse)
 ```
 
-## Questions
+## Preguntas
 
-> "There are no routine statistical questions, only questionable statistical
-> routines." --- Sir David Cox
+> "No hay preguntas estadísticas de rutina, sólo rutinas estadísticas
+> cuestionables." --- Sir David Cox
 
-> "Far better an approximate answer to the right question, which is often
-> vague, than an exact answer to the wrong question, which can always be made
-> precise." --- John Tukey
+> "Mucho mejor una respuesta aproximada a la pregunta correcta, que a
+> menudo es vaga, que una respuesta exacta a la pregunta equivocada, que
+> siempre puede ser precisa." --- John Tukey
 
-Your goal during EDA is to develop an understanding of your data. The easiest way to do this is to use questions as tools to guide your investigation. When you ask a question, the question focuses your attention on a specific part of your dataset and helps you decide which graphs, models, or transformations to make.
+Su meta durante el ADE es desarrollar una comprensión de sus datos. La forma más fácil de hacerlo es utilizar preguntas como herramientas para guiar su investigación. Cuando hace una pregunta, la pregunta centra su atención en una parte específica de su conjunto de datos y le ayuda a decidir qué gráficos, modelos o transformaciones se deben hacer.
 
-EDA is fundamentally a creative process. And like most creative processes, the key to asking _quality_ questions is to generate a large _quantity_ of questions. It is difficult to ask revealing questions at the start of your analysis because you do not know what insights are contained in your dataset. On the other hand, each new question that you ask will expose you to a new aspect of your data and increase your chance of making a discovery. You can quickly drill down into the most interesting parts of your data---and develop a set of thought-provoking questions---if you follow up each question with a new question based on what you find.
+El ADE es fundamentalmente un proceso creativo. Y al igual que la mayoría de los procesos creativos, la clave para hacer preguntas de calidad es generar una gran cantidad de preguntas. Es difícil hacer preguntas reveladoras al comienzo de su análisis porque no sabe qué ideas están contenidas en su conjunto de datos. Por otra parte, cada nueva pregunta que usted formula le expondrá a un nuevo aspecto de sus datos y aumentará su ocasión de hacer un descubrimiento. Usted puede rápidamente hurgar en las partes más interesantes de sus datos ---y desarrollar un sistema de preguntas sugerentes--- si sigue cada pregunta con una nueva pregunta basada en lo que usted encuentra.
 
-There is no rule about which questions you should ask to guide your research. However, two types of questions will always be useful for making discoveries within your data. You can loosely word these questions as:
+No hay ninguna regla sobre qué preguntas debe hacer para guiar su investigación. Sin embargo, dos tipos de preguntas siempre serán útiles para hacer descubrimientos dentro de sus datos. Usted puede formular libremente estas preguntas así:
 
-1. What type of variation occurs within my variables?
+1. Qué tipo de variación ocurre dentro de mis variables?
 
-1. What type of covariation occurs between my variables?
+1. Qué tipo de covariación ocurre entre mis variables?
 
-The rest of this chapter will look at these two questions. I'll explain what variation and covariation are, and I'll show you several ways to answer each question. To make the discussion easier, let's define some terms: 
+El resto de este capítulo examinará estas dos preguntas. Voy a explicar qué es variación y qué covariación, y le mostraré varias maneras de responder a cada pregunta. Para facilitar la discusión, definamos algunos términos:
 
-*   A __variable__ is a quantity, quality, or property that you can measure. 
+*   Una __variable__ es una cantidad, calidad o propiedad que puede           medirse. 
 
-*   A __value__ is the state of a variable when you measure it. The value of a
-    variable may change from measurement to measurement.
+*   Un __valor__ es el estado de una variable cuando se mide. El valor de     una variable puede cambiar de medida a medida.
   
-*   An __observation__ is a set of measurements made under similar conditions
-    (you usually make all of the measurements in an observation at the same 
-    time and on the same object). An observation will contain several values, 
-    each associated with a different variable. I'll sometimes refer to 
-    an observation as a data point.
+*   Una __observación__ es un conjunto de mediciones realizadas en            condiciones similares (normalmente se realizan todas las mediciones en     una observación al mismo tiempo y en el mismo objeto). Una observación     contendrá varios valores, cada uno asociado con una variable              diferente. A veces me referiré a una observación como un punto de         datos.
 
-*   __Tabular data__ is a set of values, each associated with a variable and an
-    observation. Tabular data is _tidy_ if each value is placed in its own
-    "cell", each variable in its own column, and each observation in its own 
-    row. 
+*   __Datos tabulares__ es un conjunto de valores, cada uno asociado con      una variable y una observación. Los datos tabulares están                 _organizados_ si cada valor se coloca en su propia "celda", cada          variable en su propia columna y cada observación en su propia fila. 
 
-So far, all of the data that you've seen has been tidy. In real-life, most data isn't tidy, so we'll come back to these ideas again in [tidy data].
+Hasta ahora, todos los datos que ha visto han sido ordenados. En la vida real, la mayoría de los datos no están ordenados, por lo que volveremos a estas ideas de nuevo en [datos ordenados].
 
-## Variation
+## Variación
 
-**Variation** is the tendency of the values of a variable to change from measurement to measurement. You can see variation easily in real life; if you measure any continuous variable twice, you will get two different results. This is true even if you measure quantities that are constant, like the speed of light. Each of your measurements will include a small amount of error that varies from measurement to measurement. Categorical variables can also vary if you measure across different subjects (e.g. the eye colors of different people), or different times (e.g. the energy levels of an electron at different moments). 
-Every variable has its own pattern of variation, which can reveal interesting information. The best way to understand that pattern is to visualise the distribution of the variable's values.
+La **variación** es la tendencia de los valores de una variable a cambiar de medida a medida. Usted puede ver la variación fácilmente en la vida real; si mide cualquier variable continua dos veces, obtendrá dos resultados diferentes. Esto es cierto incluso si se miden cantidades constantes, como la velocidad de la luz. Cada una de sus medidas incluirá una pequeña cantidad de error que varía de una medición a otra. Las variables categóricas también pueden variar si se miden a través de diferentes sujetos (por ejemplo, los colores de los ojos de diferentes personas), o tiempos diferentes (por ejemplo, los niveles de energía de un electrón en diferentes momentos).
+Cada variable tiene su propio patrón de variación, que puede revelar información interesante. La mejor manera de entender ese patrón es visualizar la distribución de los valores de la variable.
 
-### Visualising distributions
+### Visualización de distribuciones
 
-How you visualise the distribution of a variable will depend on whether the variable is categorical or continuous. A variable is **categorical** if it can only take one of a small set of values. In R, categorical variables are usually saved as factors or character vectors. To examine the distribution of a categorical variable, use a bar chart:
+La manera de visualizar la distribución de una variable dependerá de si la variable es categórica o continua. Una variable es **categórica** si sólo puede tomar un pequeño conjunto de valores. En R, las variables categóricas suelen guardarse como factores o vectores de caracteres. Para examinar la distribución de una variable categórica, utilice un gráfico de barras:
 
 ```{r}
 ggplot(data = diamonds) +
   geom_bar(mapping = aes(x = cut))
 ```
 
-The height of the bars displays how many observations occurred with each x value. You can compute these values manually with `dplyr::count()`:
+La altura de las barras muestra cuántas observaciones ocurrieron con cada valor de x. Puede calcular estos valores manualmente con `dplyr::count()`:
 
 ```{r}
 diamonds %>% 
   count(cut)
 ```
 
-A variable is **continuous** if it can take any of an infinite set of ordered values. Numbers and date-times are two examples of continuous variables. To examine the distribution of a continuous variable, use a histogram:
+Una variable es **continua** si puede tomar cualquiera de un conjunto infinito de valores ordenados. Los números y las fechas son dos ejemplos de variables continuas. Para examinar la distribución de una variable continua, utilice un histograma:
 
 ```{r}
 ggplot(data = diamonds) +
   geom_histogram(mapping = aes(x = carat), binwidth = 0.5)
 ```
 
-You can compute this by hand by combining `dplyr::count()` and `ggplot2::cut_width()`:
+Puede calcular esto a mano combinando `dplyr::count()` y `ggplot2::cut_width()`:
 
 ```{r}
 diamonds %>% 
   count(cut_width(carat, 0.5))
 ```
 
-A histogram divides the x-axis into equally spaced bins and then uses the height of a bar to display the number of observations that fall in each bin. In the graph above, the tallest bar shows that almost 30,000 observations have a `carat` value between 0.25 and 0.75, which are the left and right edges of the bar. 
+Un histograma divide el eje x en compartimientos igualmente espaciados y luego usa la altura de una barra para mostrar el número de observaciones que caen en cada compartimiento. En el gráfico anterior, la barra más alta muestra que casi 30.000 observaciones tienen un valor de `carat` entre 0,25 y 0,75, que son los bordes izquierdo y derecho de la barra.
 
-You can set the width of the intervals in a histogram with the `binwidth` argument, which is measured in the units of the `x` variable. You should always explore a variety of binwidths when working with histograms, as different binwidths can reveal different patterns. For example, here is how the graph above looks when we zoom into just the diamonds with a size of less than three carats and choose a smaller binwidth.
+Puede definir el ancho de los intervalos en un histograma con el argumento `binwidth`, que se mide en las unidades de la variable `x`. Siempre debe explorar una variedad de binwidths cuando se trabaja con histogramas, ya que binwidths diferentes pueden revelar diferentes patrones. Por ejemplo, aquí es cómo la gráfica de arriba se ve cuando hacemos zoom en sólo los diamantes con un tamaño de menos de tres quilates y se elige un binwidth más pequeño.
 
 ```{r}
 smaller <- diamonds %>% 
@@ -108,16 +100,16 @@ ggplot(data = smaller, mapping = aes(x = carat)) +
   geom_histogram(binwidth = 0.1)
 ```
 
-If you wish to overlay multiple histograms in the same plot, I recommend using `geom_freqpoly()` instead of `geom_histogram()`. `geom_freqpoly()` performs the same calculation as `geom_histogram()`, but instead of displaying the counts with bars, uses lines instead. It's much easier to understand overlapping lines than bars.
+Si desea superponer varios histogramas en el mismo gráfico, le recomiendo usar `geom_freqpoly()` en lugar de `geom_histogram()`. `geom_freqpoly()` realiza el mismo cálculo que `geom_histogram()`, pero en vez de mostrar las cuentas con barras, usa líneas en su lugar. Es mucho más fácil entender líneas superpuestas que barras.
 
 ```{r}
 ggplot(data = smaller, mapping = aes(x = carat, colour = cut)) +
   geom_freqpoly(binwidth = 0.1)
 ```
 
-There are a few challenges with this type of plot, which we will come back to in [visualising a categorical and a continuous variable](#cat-cont).
+Hay algunos desafíos con este tipo de gráfico, a los que volveremos en [visualización de una variable categórica y una variable continua](#cat-cont).
 
-Now that you can visualise variation, what should you look for in your plots? And what type of follow-up questions should you ask? I've put together a list below of the most useful types of information that you will find in your graphs, along with some follow-up questions for each type of information. The key to asking good follow-up questions will be to rely on your curiosity (What do you want to learn more about?) as well as your skepticism (How could this be misleading?).
+Ahora que puede visualizar la variación, ¿qué debe buscar en sus gráficos? ¿Y qué tipo de preguntas de seguimiento debe hacer? He reunido una lista a continuación de los tipos de información más útiles que encontrará en sus gráficos, junto con algunas preguntas de seguimiento para cada tipo de información. La clave para hacer buenas preguntas de seguimiento será confiar en su curiosidad (¿Sobre qué quiere aprender más?), Así como su escepticismo (¿Cómo podría esto ser engañoso?).
 
 ### Typical values
 
